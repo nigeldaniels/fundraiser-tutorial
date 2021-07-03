@@ -1,6 +1,8 @@
 pragma solidity >= 0.8.0;
 
-contract Fundraiser {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Fundraiser is Ownable {
 
     string public name;
     string public url;
@@ -28,6 +30,11 @@ contract Fundraiser {
         description = _description;
         beneficiary = _beneficiary;
         custodian = _custodian;
+        transferOwnership(_custodian);
     }
 
+    function setBeneficiary(address payable _beneficiary) public
+    onlyOwner {
+        beneficiary = _beneficiary;
+    }
 }
